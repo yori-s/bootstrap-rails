@@ -2,16 +2,7 @@ ARG RUBY_VERSION=3.0.4
 FROM ruby:$RUBY_VERSION
 
 # freetds - dont like bundle install complaining in case sqlserver is selected
-# https://github.com/rails-sqlserver/tiny_tds
-ARG FREETDS_VERSION=1.3.13
-RUN wget http://www.freetds.org/files/stable/freetds-${FREETDS_VERSION}.tar.gz && \
-  tar -xzf freetds-${FREETDS_VERSION}.tar.gz && \
-  cd freetds-${FREETDS_VERSION} && \
-  ./configure --prefix=/usr/local --with-tdsver=7.3 && \
-  make && \
-  make install && \
-  cd .. && \
-  rm -rf freetds-*
+RUN apt-get update && apt-get install -y freetds-dev freetds-bin
 
 ARG BUNDLER_VERSION=2.3.22
 RUN gem install bundler -v $BUNDLER_VERSION
