@@ -27,5 +27,6 @@ USER \$USER
 
 WORKDIR /app
 
-CMD /bin/sh -c "while sleep 1000; do :; done"
+# bundle and sleep with fast shutdown - https://stackoverflow.com/a/55734437
+CMD exec /bin/bash -c "trap : TERM INT; bundle install && sleep infinity & wait"
 EOF
